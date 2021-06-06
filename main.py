@@ -171,9 +171,9 @@ def closeOthers_Path(browser, path):
         pass
 
 
-# Roll for BTC
-def Roller():
-    func = "Roll"
+# Surf for BTC, rub
+def Surfer():
+    func = "Surf"
     func_path = '/index/'
 
     while True:
@@ -469,4 +469,4 @@ if update.check():
     notification.notify(app, 'New version is released. Please download it! Thank you.')
     os.system('start https://www.youtube.com/c/AutoAlmostEverything')
 else:
-    Roller()
+    Surfer()

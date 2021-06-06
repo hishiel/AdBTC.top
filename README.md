@@ -14,7 +14,7 @@ Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889
 
 ##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> History:
 
-**v1.0** [View on Youtube]()
+**v1.0** [View on Youtube](https://youtu.be/ymBPf4WaeyE)
 
 - Always turn on Autosurfing.
 - Surf ads (Active window, Ruble and BTC).
@@ -51,7 +51,7 @@ Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889
 
 ##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> Lịch sử:
 
-**v1.0** [Xem trên Youtube]()
+**v1.0** [Xem trên Youtube](https://youtu.be/ymBPf4WaeyE)
 
 - Luôn bật Autosurfing.
 - Tự dộng xem quảng cáo (Active window, Ruble and BTC).
