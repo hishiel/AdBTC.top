@@ -149,10 +149,13 @@ def changeDriver():
 # Switch to window relative with path
 def switchWindow_Path(browser, path):
     try:
-        for handle in browser.window_handles:
-            browser.switch_to.window(handle)
-            if path in browser.current_url:
-                break
+        current_window = browser.current_window_handle
+        if path not in browser.current_url:
+            for handle in browser.window_handles:
+                if handle != current_window:
+                    browser.switch_to.window(handle)
+                    if path in browser.current_url:
+                        break
     except:
         pass
 
@@ -233,10 +236,30 @@ def Roller():
                     while True:
                         try:
                             time.sleep(0.2)
-                            # if '' in browser.page_source:
-                            #     pass
-                            # el
-                            if 'You have watched all the websites' in browser.page_source:
+                            if 'https://adbtc.top/surftab/w/' in browser.page_source:
+                                browser.find_elements_by_xpath("//a[contains(@href, 'https://adbtc.top/surftab/w/')]")[
+                                    0].click()
+                                time.sleep(2)
+                                switchWindow_Path(browser, 'https://adbtc.top/surftab/w/')
+                                time.sleep(10)
+                                while 'Please choose one of two similar images' not in browser.title:
+                                    time.sleep(1)
+                                    browser.switch_to.window(browser.current_window_handle)
+                                log.screen_n_file('[+] Manually choose similar images.')
+                                notification.sound()
+                                notification.notify(app, 'Please choose similar images!')
+                                count_time = 0
+                                while len(
+                                        browser.window_handles) > 2 and 'Please choose one of two similar images' in browser.title:
+                                    time.sleep(1)
+                                    count_time += 1
+                                    if count_time >= 20:
+                                        break
+                                if len(browser.window_handles) > 2:
+                                    browser.close()
+                                browser.switch_to.window(main_window)
+                                log.screen_n_file('[+] Completed Active window surfing.')
+                            elif 'You have watched all the websites' in browser.page_source:
                                 time.sleep(5)
                                 break
                             elif 'title="reCAPTCHA"' in browser.page_source:
