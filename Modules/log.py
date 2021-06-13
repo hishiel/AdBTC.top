@@ -10,9 +10,9 @@ from datetime import datetime
 def screen(log, haveDateTime=False):
     if haveDateTime:
         now = datetime.now()
-        log = ' [' + f'{now:%d/%m/%Y %H:%M:%S}' + '] ' + log
+        log = ' [At %s] %s ' % (f'{now:%d/%m/%Y %H:%M:%S}', log)
     else:
-        log = ' ' + log
+        log = ' %s ' % log
     print(log)
 
 
@@ -22,9 +22,9 @@ def file(log, haveDateTime=True):
         f = open(fn, 'a')
         if haveDateTime:
             now = datetime.now()
-            log = ' [' + f'{now:%d/%m/%Y %H:%M:%S}' + '] ' + log
+            log = ' [At %s] %s ' % (f'{now:%d/%m/%Y %H:%M:%S}', log)
         else:
-            log = ' ' + log
+            log = ' %s ' % log
         f.write(log + '\n')
         f.close()
         return True

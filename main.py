@@ -146,6 +146,14 @@ def changeDriver():
     return False
 
 
+# Get with exception handler
+def get(browser, url):
+    try:
+        browser.get(url)
+    except:
+        pass
+
+
 # Switch to window relative with path
 def switchWindow_Path(browser, path):
     try:
@@ -199,26 +207,31 @@ def Surfer():
                 else:
                     log.screen_n_file('[!] %s has exception: %s!' % (app, ex))
                     notification.notify(app, '%s has exception: %s!' % (app, ex))
+
         browser.set_page_load_timeout(60)
+        browser.implicitly_wait(60)
         try:
-            browser.get(app_path)
+            get(browser, app_path)
             time.sleep(2)
             for cookie in adbtc_cookies:
                 browser.add_cookie(cookie)
-            browser.get(app_path + func_path)
+            get(browser, app_path + func_path)
             while 'Checking your browser before accessing' in browser.page_source:
                 time.sleep(1)
             time.sleep(2)
 
             main_window = browser.current_window_handle
 
-            # Autosuft
-            link = browser.find_element_by_xpath("//a[contains(text(), 'Autosurfing')]").get_attribute(
-                'href')
-            browser.execute_script('''
-                window.open(arguments[0], '_blank');
-            ''', link)
-            time.sleep(2)
+            # Auto surfing
+            link = browser.find_element_by_xpath("//a[contains(text(), 'Autosurfing')]").get_attribute('href')
+            try:
+                browser.execute_script('''
+                    window.open(arguments[0], '_blank');
+                ''', link)
+                time.sleep(2)
+            except:
+                browser.quit()
+                continue
             log.screen_n_file('[+] Start Active window surfing session.')
             browser.switch_to.window(main_window)
 
@@ -230,8 +243,8 @@ def Surfer():
                     link = browser.find_element_by_xpath(
                         "//a[contains(text(), 'Active window surfing')]").get_attribute(
                         'href')
-                    browser.get(link)
-                    time.sleep(2)
+                    get(browser, link)
+                    time.sleep(10)
                     browser.switch_to.window(main_window)
                     while True:
                         try:
@@ -260,7 +273,7 @@ def Surfer():
                                 browser.switch_to.window(main_window)
                                 log.screen_n_file('[+] Completed Active window surfing.')
                             elif 'You have watched all the websites' in browser.page_source:
-                                time.sleep(5)
+                                time.sleep(10)
                                 break
                             elif 'title="reCAPTCHA"' in browser.page_source:
                                 while True:
@@ -295,29 +308,68 @@ def Surfer():
                                             break
                                     except:
                                         pass
+                            elif 'widget containing checkbox for hCaptcha security challenge' in browser.page_source:
+                                while True:
+                                    try:
+                                        time.sleep(0.2)
+                                        if autoCaptcha:
+                                            log.screen_n_file('  [+] Automatically solve captcha.')
+                                            hcaptcha = browser.find_element_by_xpath(
+                                                "//iframe[contains(@title, 'widget containing checkbox for hCaptcha security challenge')]")
+                                            sitekey = ''
+                                            for fragment in urlparse.urlparse(
+                                                    hcaptcha.get_attribute('src')).fragment.split(
+                                                '&'):
+                                                if 'sitekey=' in str(fragment):
+                                                    sitekey = str(fragment).split('=')[1]
+                                                    break
+                                            token = ac.HCaptcha(sitekey, browser.current_url)
+                                            log.screen_n_file(
+                                                '    [+] Captcha response is %s.' % (token[:7] + '...' + token[-7:]))
+                                            browser.execute_script('''
+                                                document.getElementsByTagName("textarea")[0].innerHTML = arguments[0];
+                                                document.getElementsByTagName("form")[0].submit();
+                                            ''', token)
+                                            time.sleep(10)
+                                            break
+                                        else:
+                                            log.screen_n_file('[+] Manually solve captcha.')
+                                            notification.sound()
+                                            notification.notify(app, 'Please solve captcha!')
+                                            time.sleep(60)
+                                            break
+                                    except:
+                                        pass
+                            else:
+                                time.sleep(10)
+                                break
                         except:
                             pass
 
                     # Surf ads ₽
                     link = browser.find_element_by_xpath("//a[contains(text(), 'Surf ads ₽')]").get_attribute(
                         'href')
-                    browser.get(link)
-                    time.sleep(2)
+                    get(browser, link)
+                    time.sleep(10)
                     browser.switch_to.window(main_window)
                     while True:
                         try:
                             time.sleep(0.2)
                             if '0pen' in browser.page_source or 'Opеn' in browser.page_source:
-                                detect_string = 'Opеn'
-                                if '0pen' in browser.page_source:
+                                while True:
                                     detect_string = '0pen'
-                                open_btns = browser.find_elements_by_xpath(
-                                    "//a[contains(text(), '" + detect_string + "')]")
-                                for open_btn in open_btns:
-                                    try:
-                                        open_btn.click()
-                                    except:
-                                        pass
+                                    if 'Opеn' in browser.page_source:
+                                        detect_string = 'Opеn'
+                                    open_btns = browser.find_elements_by_xpath(
+                                        "//a[contains(text(), '" + detect_string + "')]")
+                                    for open_btn in open_btns:
+                                        try:
+                                            open_btn.click()
+                                        except:
+                                            pass
+                                    time.sleep(0.2)
+                                    if len(browser.window_handles) > 2:
+                                        break
                                 time.sleep(10)
                                 if len(browser.window_handles) > 2:
                                     isChecked = True
@@ -334,12 +386,13 @@ def Surfer():
                                         closeOthers_Path(browser, app_path)
                                         browser.switch_to.window(main_window)
                                         log.screen_n_file('[+] Completed Surf ads ₽ task.')
+                                        time.sleep(10)
                                     else:
                                         closeOthers_Path(browser, app_path)
                                         browser.switch_to.window(main_window)
-                                        browser.get(browser.current_url)
+                                        get(browser, browser.current_url)
                             elif 'You have watched all the websites' in browser.page_source:
-                                time.sleep(5)
+                                time.sleep(10)
                                 break
                             elif 'title="reCAPTCHA"' in browser.page_source:
                                 while True:
@@ -364,6 +417,38 @@ def Surfer():
                                             ''', token)
                                             time.sleep(1)
                                             browser.find_element_by_xpath("//input[contains(@type, 'submit')]").click()
+                                            time.sleep(10)
+                                            break
+                                        else:
+                                            log.screen_n_file('[+] Manually solve captcha.')
+                                            notification.sound()
+                                            notification.notify(app, 'Please solve captcha!')
+                                            time.sleep(60)
+                                            break
+                                    except:
+                                        pass
+                            elif 'widget containing checkbox for hCaptcha security challenge' in browser.page_source:
+                                while True:
+                                    try:
+                                        time.sleep(0.2)
+                                        if autoCaptcha:
+                                            log.screen_n_file('  [+] Automatically solve captcha.')
+                                            hcaptcha = browser.find_element_by_xpath(
+                                                "//iframe[contains(@title, 'widget containing checkbox for hCaptcha security challenge')]")
+                                            sitekey = ''
+                                            for fragment in urlparse.urlparse(
+                                                    hcaptcha.get_attribute('src')).fragment.split(
+                                                '&'):
+                                                if 'sitekey=' in str(fragment):
+                                                    sitekey = str(fragment).split('=')[1]
+                                                    break
+                                            token = ac.HCaptcha(sitekey, browser.current_url)
+                                            log.screen_n_file(
+                                                '    [+] Captcha response is %s.' % (token[:7] + '...' + token[-7:]))
+                                            browser.execute_script('''
+                                                document.getElementsByTagName("textarea")[0].innerHTML = arguments[0];
+                                                document.getElementsByTagName("form")[0].submit();
+                                            ''', token)
                                             time.sleep(10)
                                             break
                                         else:
@@ -378,25 +463,28 @@ def Surfer():
                             pass
 
                     # Surf ads
-                    link = browser.find_elements_by_xpath("//a[contains(text(), 'Surf ads')]")[1].get_attribute(
-                        'href')
-                    browser.get(link)
-                    time.sleep(2)
+                    link = browser.find_elements_by_xpath("//a[contains(text(), 'Surf ads')]")[1].get_attribute('href')
+                    get(browser, link)
+                    time.sleep(10)
                     browser.switch_to.window(main_window)
                     while True:
                         try:
                             time.sleep(0.2)
                             if '0pen' in browser.page_source or 'Opеn' in browser.page_source:
-                                detect_string = 'Opеn'
-                                if '0pen' in browser.page_source:
+                                while True:
                                     detect_string = '0pen'
-                                open_btns = browser.find_elements_by_xpath(
-                                    "//a[contains(text(), '" + detect_string + "')]")
-                                for open_btn in open_btns:
-                                    try:
-                                        open_btn.click()
-                                    except:
-                                        pass
+                                    if 'Opеn' in browser.page_source:
+                                        detect_string = 'Opеn'
+                                    open_btns = browser.find_elements_by_xpath(
+                                        "//a[contains(text(), '" + detect_string + "')]")
+                                    for open_btn in open_btns:
+                                        try:
+                                            open_btn.click()
+                                        except:
+                                            pass
+                                    time.sleep(0.2)
+                                    if len(browser.window_handles) > 2:
+                                        break
                                 time.sleep(10)
                                 if len(browser.window_handles) > 2:
                                     isChecked = True
@@ -412,13 +500,14 @@ def Surfer():
                                         time.sleep(10)
                                         closeOthers_Path(browser, app_path)
                                         browser.switch_to.window(main_window)
-                                        log.screen_n_file('[+] Completed Surf ads ₽ task.')
+                                        log.screen_n_file('[+] Completed Surf ads task.')
+                                        time.sleep(10)
                                     else:
                                         closeOthers_Path(browser, app_path)
                                         browser.switch_to.window(main_window)
-                                        browser.get(browser.current_url)
+                                        get(browser, browser.current_url)
                             elif 'You have watched all the websites' in browser.page_source:
-                                time.sleep(5)
+                                time.sleep(10)
                                 break
                             elif 'title="reCAPTCHA"' in browser.page_source:
                                 while True:
@@ -443,6 +532,38 @@ def Surfer():
                                             ''', token)
                                             time.sleep(1)
                                             browser.find_element_by_xpath("//input[contains(@type, 'submit')]").click()
+                                            time.sleep(10)
+                                            break
+                                        else:
+                                            log.screen_n_file('[+] Manually solve captcha.')
+                                            notification.sound()
+                                            notification.notify(app, 'Please solve captcha!')
+                                            time.sleep(60)
+                                            break
+                                    except:
+                                        pass
+                            elif 'widget containing checkbox for hCaptcha security challenge' in browser.page_source:
+                                while True:
+                                    try:
+                                        time.sleep(0.2)
+                                        if autoCaptcha:
+                                            log.screen_n_file('  [+] Automatically solve captcha.')
+                                            hcaptcha = browser.find_element_by_xpath(
+                                                "//iframe[contains(@title, 'widget containing checkbox for hCaptcha security challenge')]")
+                                            sitekey = ''
+                                            for fragment in urlparse.urlparse(
+                                                    hcaptcha.get_attribute('src')).fragment.split(
+                                                '&'):
+                                                if 'sitekey=' in str(fragment):
+                                                    sitekey = str(fragment).split('=')[1]
+                                                    break
+                                            token = ac.HCaptcha(sitekey, browser.current_url)
+                                            log.screen_n_file(
+                                                '    [+] Captcha response is %s.' % (token[:7] + '...' + token[-7:]))
+                                            browser.execute_script('''
+                                                document.getElementsByTagName("textarea")[0].innerHTML = arguments[0];
+                                                document.getElementsByTagName("form")[0].submit();
+                                            ''', token)
                                             time.sleep(10)
                                             break
                                         else:
@@ -467,6 +588,6 @@ def Surfer():
 if update.check():
     log.screen_n_file('[*] New version is released. Please download it! Thank you.')
     notification.notify(app, 'New version is released. Please download it! Thank you.')
-    os.system('start https://www.youtube.com/c/AutoAlmostEverything')
+    os.system('start https://www.youtube.com/watch?v=ymBPf4WaeyE')
 else:
     Surfer()
