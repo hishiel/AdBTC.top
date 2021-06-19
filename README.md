@@ -23,21 +23,10 @@ Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889
 
 ##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> Installation:
 
-1. Install language **Python 3.9.x** https://www.python.org/downloads/.
-
-[![SC2 Video](http://i3.ytimg.com/vi/_CoijjMXvYY/hqdefault.jpg)](https://www.youtube.com/watch?v=_CoijjMXvYY)
-
-2. Install modules **selenium**, **win10toast** `python -m pip install selenium win10toast`.
-
-[![SC2 Video](http://i3.ytimg.com/vi/SQQRYAMl8Jk/hqdefault.jpg)](https://www.youtube.com/watch?v=SQQRYAMl8Jk)
-
-3. (_Optional_) Install IDE **PyCharm** https://www.jetbrains.com/pycharm/.
-
-[![SC2 Video](http://i3.ytimg.com/vi/FqEXepao0go/hqdefault.jpg)](https://www.youtube.com/watch?v=FqEXepao0go)
-
-4. (_Optional_) Download **Chrome WebDriver** https://chromedriver.chromium.org/.
-5. Run script.
-6. (_Optional_) Edit script for your personal use. Contact me for more functions.
+1. Click `1. CLICK_HERE_to_setup.bat` to setup Python, Brave.
+2. Click `2. CLICK_HERE_to_install_modules.bat` to install modules.
+3. Configure in `main.py`.
+4. Click `3. CLICK_HERE_to_run.bat` to run.
 
 ### [Tiếng Việt - English above]
 
@@ -60,21 +49,10 @@ Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889
 
 ##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> Cài đặt:
 
-1. Cài đặt ngôn ngữ **Python 3.9.x** https://www.python.org/downloads/.
-
-[![SC2 Video](http://i3.ytimg.com/vi/_CoijjMXvYY/hqdefault.jpg)](https://www.youtube.com/watch?v=_CoijjMXvYY)
-
-2. Cài đặt modules **selenium**, **win10toast** `python -m pip install selenium win10toast`.
-
-[![SC2 Video](http://i3.ytimg.com/vi/SQQRYAMl8Jk/hqdefault.jpg)](https://www.youtube.com/watch?v=SQQRYAMl8Jk)
-
-3. (_Tự chọn_) Cài đặt IDE **PyCharm** https://www.jetbrains.com/pycharm/.
-
-[![SC2 Video](http://i3.ytimg.com/vi/FqEXepao0go/hqdefault.jpg)](https://www.youtube.com/watch?v=FqEXepao0go)
-
-4. (_Tự chọn_) Tải **Chrome WebDriver** https://chromedriver.chromium.org/.
-5. Thực thi mã.
-6. (_Tự chọn_) Sửa mã cho mục đích sử dụng cá nhân của bạn. Liên hệ tôi để có thêm tính năng mới!
+1. Click `1. CLICK_HERE_to_setup.bat` để cài đặt Python, Brave.
+2. Click `2. CLICK_HERE_to_install_modules.bat` để cài đặt modules.
+3. Tùy chỉnh cấu hình trong tập tin `main.py`.
+4. Click `3. CLICK_HERE_to_run.bat` để chạy.
 
 # Auto Almost Everything
 

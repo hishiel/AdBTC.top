@@ -19,8 +19,10 @@ app_path = 'https://adbtc.top'
 # Browser config
 opts = Options()
 opts.binary_location = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'  # <-- Change to your Chromium browser path, replace '\' with '\\'.
-opts.add_experimental_option('excludeSwitches', ['enable-automation'])
 opts.add_experimental_option('useAutomationExtension', False)
+opts.add_experimental_option('excludeSwitches', ['enable-automation'])
+opts.add_argument('--log-level=3')
+opts.add_argument('--mute-audio')
 cap = DesiredCapabilities.CHROME.copy()
 cap['platform'] = 'WINDOWS'
 cap['version'] = '10'
@@ -103,9 +105,9 @@ chromedriver_path = '.\\Drivers\\%s.exe' % chromedriver_list[chromedriver_index]
 adbtc_cookies = [
     {
         'name': 'cf_clearance',
-        # Replace by your CloudFlare session -->
-        'value': 'YourCloudFlareSession',
-        # <-- Replace by your CloudFlare session
+        # Replace by your Cloudflare clearance -->
+        'value': 'YourCloudflareClearance',
+        # <-- Replace by your Cloudflare clearance
         'domain': '.adbtc.top',
         'path': '/',
     },
@@ -223,15 +225,20 @@ def Surfer():
             main_window = browser.current_window_handle
 
             # Auto surfing
-            link = browser.find_element_by_xpath("//a[contains(text(), 'Autosurfing')]").get_attribute('href')
-            try:
-                browser.execute_script('''
-                    window.open(arguments[0], '_blank');
-                ''', link)
-                time.sleep(2)
-            except:
-                browser.quit()
-                continue
+            startNewTab = datetime.now().timestamp()
+            while True:
+                link = browser.find_element_by_xpath("//a[contains(text(), 'Autosurfing')]").get_attribute('href')
+                try:
+                    browser.execute_script('''
+                        window.open(arguments[0], '_blank');
+                    ''', link)
+                    time.sleep(2)
+                    break
+                except:
+                    time.sleep(1)
+                finally:
+                    if datetime.now().timestamp() > startNewTab + 10:
+                        break
             log.screen_n_file('[+] Start Active window surfing session.')
             browser.switch_to.window(main_window)
 
@@ -391,6 +398,12 @@ def Surfer():
                                         closeOthers_Path(browser, app_path)
                                         browser.switch_to.window(main_window)
                                         get(browser, browser.current_url)
+                            elif 'You closed page' in browser.page_source:
+                                try:
+                                    browser.find_element_by_xpath("//a[contains(@href, '/skip/')]").click()
+                                except:
+                                    pass
+                                time.sleep(2)
                             elif 'You have watched all the websites' in browser.page_source:
                                 time.sleep(10)
                                 break
@@ -506,6 +519,12 @@ def Surfer():
                                         closeOthers_Path(browser, app_path)
                                         browser.switch_to.window(main_window)
                                         get(browser, browser.current_url)
+                            elif 'You closed page' in browser.page_source:
+                                try:
+                                    browser.find_element_by_xpath("//a[contains(@href, '/skip/')]").click()
+                                except:
+                                    pass
+                                time.sleep(2)
                             elif 'You have watched all the websites' in browser.page_source:
                                 time.sleep(10)
                                 break
