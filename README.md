@@ -1,6 +1,6 @@
-# AdBTC.top Auto Surf for Ruble & BTC
+# AdBTC.top Auto Surf Web, View Videos, Do Tasks
 
-Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889)
+Earn Ruble & BTC by surfing web, viewing videos, doing tasks. [Register here](https://r.adbtc.top/2435889)
 
 ### [English - Tiếng Việt bên dưới]
 
