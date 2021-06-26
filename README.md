@@ -8,9 +8,10 @@ Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889
 
 1. Always turn on Autosurfing.
 2. Surf ads (Active window, Ruble and BTC).
-3. Do Shortlink tasks. (Update soon in v1.1)
-4. Support proxy (include authentication proxy).
-5. Logging.
+4. View videos. (Update soon in v1.1)
+4. Do Shortlink tasks. (Update soon in v1.1)
+5. Support proxy (include authentication proxy).
+6. Logging.
 
 ##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> History:
 
@@ -28,15 +29,20 @@ Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889
 3. Configure in `main.py`.
 4. Click `3. CLICK_HERE_to_run.bat` to run.
 
+##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> Note:
+
+- Change **Cloudflare clearance** when stuck at Cloudflare checking page.
+
 ### [Tiếng Việt - English above]
 
 ##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> Tính năng:
 
 1. Luôn bật Autosurfing.
 2. Tự dộng xem quảng cáo (Active window, Ruble and BTC).
-3. Làm các nhiệm vụ Shortlink. (Cập nhật sớm trong v1.1)
-4. Hỗ trợ proxy (bao gồm proxy có username và password).
-5. Ghi log.
+3. Xem videos. (Cập nhật sớm trong v1.1)
+4. Làm các nhiệm vụ Shortlink. (Cập nhật sớm trong v1.1)
+5. Hỗ trợ proxy (bao gồm proxy có username và password).
+6. Ghi log.
 
 ##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> Lịch sử:
 
@@ -53,6 +59,10 @@ Earn Ruble & BTC by surfing web. ==> [Register here](https://r.adbtc.top/2435889
 2. Click `2. CLICK_HERE_to_install_modules.bat` để cài đặt modules.
 3. Tùy chỉnh cấu hình trong tập tin `main.py`.
 4. Click `3. CLICK_HERE_to_run.bat` để chạy.
+
+##### <img src="https://www.svgrepo.com/show/226569/rec-dot.svg" width="12" height="12"> Chú ý:
+
+- Cập nhật **Cloudflare clearance** khi bị kẹt tại trang kiểm tra của Cloudflare.
 
 # Auto Almost Everything
 
